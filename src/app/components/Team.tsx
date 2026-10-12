@@ -1,146 +1,25 @@
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Instagram } from 'lucide-react';
-
-
-gsap.registerPlugin(ScrollTrigger);
-
 const teamMembers = [
-  {
-    name: 'Erich Joshua Cisneros',
-    role: 'Founder · Creative Director',
-image: '/images/erich.jpeg',
-    bio: 'Erich liebt gute Bilder und ehrliche Geschichten. Wenn er nicht gerade hinter der Kamera steht, denkt er schon über die nächste Idee nach.',
-    imagePosition: 'center',
-    instagram: 'https://www.instagram.com/rickyonset',
-  },
-  {
-    name: 'Lina Rk',
-    role: 'Social Media Managerin',
-    image: '/images/lina.jpeg',
-    bio: 'Lina versteht Algorithmen fast so gut wie Menschen. Sie weiß, wann ein Post funktioniert und wann man ihn besser in den Entwürfen lässt.',
-    imagePosition: 'center',
-    instagram: 'https://www.instagram.com/lilinaaea',
-  },
-  {
-    name: 'Dardan Cisneros',
-    role: 'Cutter',
-    image: '/images/dardan.jpeg',
-    bio: 'Dardan sieht, was andere übersehen und in einem Augenblick entsteht Kunst.',
-    imagePosition: 'center 20%',
-    instagram: 'https://www.instagram.com/dardan.tmr',
-  },
-  {
-    name: 'Jennifer Ast',
-    role: 'Sales Assistentin',
-    image: '/images/jennifer.jpeg',
-    bio: 'Jennifer ist das Organisationstalent im Team. Während andere noch nach der letzten Mail suchen, hat sie schon drei Antworten vorbereitet.',
-    imagePosition: 'center 20%',
-    instagram: 'https://www.instagram.com/jenniferaaaa',
-  },
+  { name: 'Erich Joshua Cisneros', role: 'Founder · Creative Director', image: '/images/erich_team.jpeg' },
+  { name: 'Lina Rk', role: 'Social Media Managerin', image: '/images/lina_team.jpeg' },
+  { name: 'Dardan Cisneros', role: 'Cutter', image: '/images/dardan_team.jpeg' },
+  { name: 'Jennifer Ast', role: 'Sales Assistentin', image: '/images/jennifer_team.jpeg' },
+  { name: 'Maksim', role: '', image: '/images/maksim_team.jpeg' },
 ];
 
 export function Team() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 80%',
-          },
-        }
-      );
-
-      cardsRef.current.forEach((card, index) => {
-        if (card) {
-          gsap.fromTo(
-            card,
-            { opacity: 0, y: 100, rotateY: 20 },
-            {
-              opacity: 1,
-              y: 0,
-              rotateY: 0,
-              duration: 0.8,
-              delay: index * 0.2,
-              scrollTrigger: {
-                trigger: card,
-                start: 'top 85%',
-              },
-            }
-          );
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section
-      id="team"
-      ref={sectionRef}
-      className="min-h-screen py-20 px-6"
-      style={{ backgroundColor: '#0a0a0a' }}
-    >
-      <div className="container mx-auto max-w-7xl">
-        <h2
-          ref={titleRef}
-          className="text-5xl md:text-7xl tracking-wider mb-20 text-center"
-          style={{ color: 'var(--gold)' }}
-        >
-          TEAM
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {teamMembers.map((member, index) => (
-            <div
-              key={index}
-              ref={(el) => (cardsRef.current[index] = el)}
-              className="group"
-              style={{ perspective: '1000px' }}
-            >
-              <div className="relative overflow-hidden rounded-lg mb-6">
-                <img
-                  src={member.image}
-                  alt={member.name}
-                  className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-110"
-                  style={{ objectPosition: member.imagePosition }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60" />
-                
-                {/* Social Links - Appear on Hover */}
-                <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <a
-                    href={member.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-gold/20 transition-colors"
-                    style={{ borderColor: 'var(--gold)' }}
-                  >
-                    <Instagram size={18} style={{ color: 'var(--gold)' }} />
-                  </a>
-                </div>
+    <section id="team" aria-labelledby="team-heading" className="bg-black px-6 pb-24 pt-10 text-white sm:pb-32">
+      <div className="mx-auto max-w-[1500px]">
+        <h2 id="team-heading" className="mb-12 text-[clamp(3.5rem,10vw,10rem)] font-black uppercase leading-[0.85] tracking-[-0.075em] sm:mb-16">THE TEAM<span className="text-white/35">.</span></h2>
+        <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 lg:grid-cols-5">
+          {teamMembers.map((member) => (
+            <article key={member.name} className="group min-w-0">
+              <div className="overflow-hidden bg-neutral-950">
+                <img src={member.image} alt={member.name} loading="lazy" className="aspect-[3/4] w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.045]" />
               </div>
-
-              <h3 className="text-xl text-white mb-2">{member.name}</h3>
-              <p className="text-sm uppercase tracking-wider mb-3" style={{ color: 'var(--gold)' }}>
-                {member.role}
-              </p>
-              <p className="text-sm text-white/60 leading-relaxed">
-                {member.bio}
-              </p>
-            </div>
+              <h3 className="mt-4 text-sm font-semibold leading-snug sm:text-base">{member.name}</h3>
+              {member.role && <p className="mt-1 text-xs text-white/50 sm:text-sm">{member.role}</p>}
+            </article>
           ))}
         </div>
       </div>

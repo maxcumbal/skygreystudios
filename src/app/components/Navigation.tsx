@@ -1,158 +1,56 @@
-import { useState, useEffect } from 'react';
-import { X, CalendarDays } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
 
-const navItems = [
-  { id: 'hero', label: 'Home' },
-  { id: 'projects', label: 'Filmprojekte' },
+const links = [
+  { id: '/projekte', label: 'Projekte' },
+  { id: '/immobilienfilme', label: 'Immobilienfilme' },
   { id: 'services', label: 'Leistungen' },
-  { id: 'about', label: 'Über mich' },
-  { id: 'team', label: 'Team' },
-  { id: 'testimonials', label: 'Kundenstimmen' },
+  { id: 'about', label: 'Studio' },
   { id: 'contact', label: 'Kontakt' },
 ];
-
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const isHomePage = location.pathname === '/';
-
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-      const sections = navItems.map(item => document.getElementById(item.id));
-      const scrollPosition = window.scrollY + 200;
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const section = sections[i];
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navItems[i].id);
-          break;
-        }
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll(); window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
-
-  const scrollToSection = (id: string) => {
-    if (!isHomePage) {
-      navigate('/');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          window.scrollTo({ top: element.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
-        }
-      }, 100);
-    } else {
-      const element = document.getElementById(id);
-      if (element) {
-        window.scrollTo({ top: element.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
-      }
-    }
-    setIsMobileMenuOpen(false);
+  useEffect(() => { setOpen(false); }, [location.pathname]);
+  useEffect(() => {
+    if (!open) return;
+    const old = document.body.style.overflow; document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    window.addEventListener('keydown', onKey);
+    return () => { document.body.style.overflow = old; window.removeEventListener('keydown', onKey); };
+  }, [open]);
+  const go = (id: string) => {
+    setOpen(false);
+    if (id.startsWith('/')) { navigate(id); return; }
+    const scrollToSection = () => document.getElementById(id)?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    if (location.pathname !== '/') { navigate('/'); setTimeout(scrollToSection, 180); }
+    else scrollToSection();
   };
-
-  const openCalendly = () => {
-    window.open('https://calendly.com/ecisneros-info/30min', '_blank');
-    setIsMobileMenuOpen(false);
-  };
-
-  return (
-    <>
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-black/90 backdrop-blur-md py-3' : 'bg-transparent py-4'}`}>
-        <div className="container mx-auto px-6 flex items-center justify-between">
-
-          {/* Logo */}
-          <button onClick={() => scrollToSection('hero')} className="flex items-center cursor-pointer">
-            <img
-              src="/images/skygreylogo.png"
-              alt="SKYGREY Studios"
-              style={{ height: '32px', width: 'auto', objectFit: 'contain' }}
-            />
-          </button>
-
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.slice(1).map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`uppercase tracking-wider text-sm cursor-pointer transition-colors ${activeSection === item.id ? 'opacity-100' : 'opacity-70 hover:opacity-100'}`}
-                style={{ color: activeSection === item.id ? 'var(--gold)' : 'white' }}
-              >
-                {item.label}
-              </button>
-            ))}
-
-            {/* Calendly Button */}
-            <button
-              onClick={openCalendly}
-              className="cursor-pointer flex items-center gap-2 px-4 py-2 rounded-full border border-white/30 text-sm uppercase tracking-wider text-white hover:border-yellow-400 hover:text-yellow-400 transition-colors duration-300"
-            >
-              <CalendarDays size={15} />
-              Termin buchen
-            </button>
-          </div>
-
-          {/* Mobile: 2 Striche */}
-          <button
-            className="md:hidden flex flex-col justify-center gap-[6px] p-2 cursor-pointer"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Menü"
-          >
-            <span
-              style={{
-                display: 'block',
-                width: '24px',
-                height: '1.5px',
-                backgroundColor: 'white',
-                transition: 'all 0.3s ease',
-                transform: isMobileMenuOpen ? 'translateY(3.75px) rotate(45deg)' : 'none',
-              }}
-            />
-            <span
-              style={{
-                display: 'block',
-                width: '24px',
-                height: '1.5px',
-                backgroundColor: 'white',
-                transition: 'all 0.3s ease',
-                transform: isMobileMenuOpen ? 'translateY(-3.75px) rotate(-45deg)' : 'none',
-              }}
-            />
-          </button>
+  return <>
+    <header className={`sky-nav fixed top-0 inset-x-0 z-[60] text-white transition-colors duration-500 ${scrolled || open ? 'bg-[#101010]/95 backdrop-blur-xl' : 'bg-transparent'}`}>
+      <nav className="h-[84px] px-6 sm:px-10 lg:px-16 flex items-center justify-between gap-5" aria-label="Hauptnavigation">
+        <button onClick={() => go('hero')} aria-label="SKYGREY Studios – Startseite" className="relative z-[70] flex items-center"><img src="/images/skygreylogo.png" alt="SKYGREY Studios" className="h-8 sm:h-9 w-auto object-contain" /></button>
+        <div className="hidden lg:flex items-center gap-9">{links.slice(0,3).map(item => <button key={item.id} onClick={() => go(item.id)} className="sky-nav-link text-xs font-semibold uppercase tracking-[.18em]">{item.label}</button>)}</div>
+        <div className="flex items-center gap-3">
+          <button onClick={() => go('contact')} className="hidden sm:flex sky-nav-contact items-center gap-3 rounded-full border border-white/50 px-5 py-3 text-xs font-bold uppercase tracking-[.12em] hover:bg-white hover:text-black transition-colors">PROJEKT ANFRAGEN <ArrowUpRight size={16}/></button>
+          <button onClick={() => setOpen(v => !v)} aria-expanded={open} aria-controls="sky-full-menu" aria-label={open ? 'Menü schließen' : 'Menü öffnen'} className="relative z-[70] rounded-full border border-white/40 h-12 w-12 flex items-center justify-center hover:bg-white hover:text-black transition-colors">{open ? <X size={23}/> : <Menu size={23}/>}</button>
         </div>
       </nav>
-
-      {/* Mobile Menu */}
-      <div
-        className={`fixed inset-0 bg-black z-40 transition-transform duration-400 md:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
-      >
-        <div className="flex flex-col items-center justify-center h-full gap-8">
-          {navItems.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className="text-2xl uppercase tracking-wider transition-colors cursor-pointer"
-              style={{ color: activeSection === item.id ? 'var(--gold)' : 'white' }}
-            >
-              {item.label}
-            </button>
-          ))}
-
-          {/* Calendly Button Mobile */}
-          <button
-            onClick={openCalendly}
-            className="cursor-pointer flex items-center gap-2 px-6 py-3 rounded-full border border-white/30 text-xl uppercase tracking-wider text-white hover:border-yellow-400 hover:text-yellow-400 transition-colors duration-300"
-          >
-            <CalendarDays size={20} />
-            Termin buchen
-          </button>
-        </div>
+    </header>
+    <div id="sky-full-menu" aria-hidden={!open} className={`sky-menu fixed inset-0 z-[55] bg-[#111] text-white transition-all duration-500 ${open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
+      <div className="h-full flex flex-col justify-center overflow-y-auto px-6 sm:px-16 lg:px-24 pt-28 pb-10">
+        <span className="text-xs uppercase tracking-[.3em] text-white/50 mb-8">Explore SKYGREY</span>
+        {links.map((item, i) => <button key={item.id} tabIndex={open ? 0 : -1} onClick={() => go(item.id)} className="group w-fit text-left uppercase font-black tracking-[-.06em] leading-[1.1] text-[clamp(2.4rem,7vw,7rem)] hover:text-white/45 transition-colors"><span className="inline-block align-top text-xs tracking-normal font-medium text-white/50 mr-3 sm:mr-5 mt-2 sm:mt-4">0{i+1}</span>{item.label}<ArrowUpRight className="inline-block ml-4 opacity-0 group-hover:opacity-100 transition-opacity" size={30}/></button>)}
+        <p className="mt-12 text-white/40 text-sm">Independent film & creative studio</p>
       </div>
-    </>
-  );
+    </div>
+  </>;
 }

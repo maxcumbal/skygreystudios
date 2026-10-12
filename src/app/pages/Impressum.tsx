@@ -17,23 +17,23 @@ export function Impressum() {
     <>
       <Navigation />
       <SocialSidebar />
-      <div className="min-h-screen py-20 px-6" style={{ backgroundColor: '#0a0a0a' }}>
-        <div className="container mx-auto max-w-4xl">
+      <div className="min-h-screen bg-black px-6 pt-32 pb-16 text-white md:pt-40">
+        <div className="mx-auto max-w-4xl">
           <button
             onClick={handleBackToHome}
-            className="inline-flex items-center gap-2 text-white/60 hover:text-gold transition-colors mb-8 cursor-pointer"
+            className="mb-12 inline-flex cursor-pointer items-center gap-2 text-sm text-white/50 transition-colors hover:text-white"
           >
             <ArrowLeft size={20} />
             Zurück zur Startseite
           </button>
 
-          <h1 className="text-5xl md:text-7xl tracking-wider mb-12" style={{ color: 'var(--gold)' }}>
+          <h1 className="mb-8 text-5xl font-semibold tracking-[-0.055em] text-white sm:text-7xl md:text-8xl">
             IMPRESSUM
           </h1>
 
-          <div className="prose prose-invert max-w-none space-y-8 text-white/80">
+          <div className="legal-content max-w-3xl space-y-10 border-t border-white/20 pt-12 text-base leading-relaxed text-white/65">
             <section>
-              <h2 className="text-3xl text-white mb-4">Angaben gemäß § 5 TMG</h2>
+              <h2 className="mb-4 text-2xl font-medium tracking-tight text-white md:text-3xl">Angaben gemäß § 5 TMG</h2>
               <p>
                 SKYGREY Studios<br />
                 Kreuzritterstraße 18<br />
@@ -43,7 +43,7 @@ export function Impressum() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">Kontakt</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">Kontakt</h3>
               <p>
                 Telefon: +49 176 805 733 42<br />
                 E-Mail: info@skygreystudios.de
@@ -51,7 +51,7 @@ export function Impressum() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">Umsatzsteuer-ID</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">Umsatzsteuer-ID</h3>
               <p>
                 Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br />
                 DE206/5048/3891
@@ -59,7 +59,7 @@ export function Impressum() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">EU-Streitschlichtung</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">EU-Streitschlichtung</h3>
               <p>
                 Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
                 <br />
@@ -67,7 +67,7 @@ export function Impressum() {
                   href="https://ec.europa.eu/consumers/odr" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gold hover:underline"
+                  className="text-white underline underline-offset-4 hover:text-white/70"
                 >
                   https://ec.europa.eu/consumers/odr
                 </a>
@@ -77,7 +77,7 @@ export function Impressum() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">Verbraucherstreitbeilegung / Universalschlichtungsstelle</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">Verbraucherstreitbeilegung / Universalschlichtungsstelle</h3>
               <p>
                 Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
                 Verbraucherschlichtungsstelle teilzunehmen.
@@ -85,7 +85,7 @@ export function Impressum() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">Haftung für Inhalte</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">Haftung für Inhalte</h3>
               <p>
                 Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den
                 allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht
@@ -95,7 +95,7 @@ export function Impressum() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">Haftung für Links</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">Haftung für Links</h3>
               <p>
                 Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben.
                 Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
@@ -104,7 +104,7 @@ export function Impressum() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">Urheberrecht</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">Urheberrecht</h3>
               <p>
                 Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen
                 Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der
@@ -119,13 +119,13 @@ export function Impressum() {
         </div>
 
         {/* Footer */}
-        <div className="container mx-auto max-w-4xl mt-20 pt-10 border-t border-white/10">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-white/50 text-sm">
+        <div className="mx-auto mt-24 max-w-4xl border-t border-white/20 pt-8">
+          <div className="flex flex-col items-center justify-between gap-5 text-sm text-white/45 md:flex-row">
             <p>© 2026 SKYGREY Studios. Alle Rechte vorbehalten.</p>
-            <div className="flex gap-6 items-center">
-              <Link to="/datenschutz" className="hover:text-gold transition-colors">Datenschutz</Link>
-              <Link to="/impressum" className="hover:text-gold transition-colors">Impressum</Link>
-              <Link to="/agb" className="hover:text-gold transition-colors">AGB</Link>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              <Link to="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
+              <Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link>
+              <Link to="/agb" className="hover:text-white transition-colors">AGB</Link>
             </div>
           </div>
           
@@ -134,10 +134,10 @@ export function Impressum() {
               href="https://www.maxmedia.de"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-white/40 hover:text-gold transition-colors text-sm group"
+              className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors text-sm group"
             >
               <span>Webdesign by:</span>
-              <span className="font-semibold text-white/60 group-hover:text-gold transition-colors">
+              <span className="font-semibold text-white/60 group-hover:text-white transition-colors">
                 MAXMEDIA
               </span>
             </a>

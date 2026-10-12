@@ -4,6 +4,8 @@ import { HomePage } from './pages/HomePage';
 import { Datenschutz } from './pages/Datenschutz';
 import { Impressum } from './pages/Impressum';
 import { AGB } from './pages/AGB';
+import { Immobilienfilme } from './pages/Immobilienfilme';
+import { WeitereProjekte } from './pages/WeitereProjekte';
 
 export const router = createBrowserRouter([
   {
@@ -13,6 +15,8 @@ export const router = createBrowserRouter([
         path: '/',
         Component: HomePage,
       },
+      { path: '/immobilienfilme', Component: Immobilienfilme },
+      { path: '/projekte', Component: WeitereProjekte },
       {
         path: '/datenschutz',
         Component: Datenschutz,

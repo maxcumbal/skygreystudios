@@ -13,6 +13,7 @@ import { SocialSidebar } from '../components/SocialSidebar';
 
 export function HomePage() {
   useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       duration: 1.2,
@@ -26,14 +27,22 @@ export function HomePage() {
       infinite: false,
     });
 
+    let frame = 0;
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      frame = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    frame = requestAnimationFrame(raf);
+    const lockScroll = () => lenis.stop();
+    const unlockScroll = () => lenis.start();
+    window.addEventListener('sky:lock-scroll', lockScroll);
+    window.addEventListener('sky:unlock-scroll', unlockScroll);
 
     return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('sky:lock-scroll', lockScroll);
+      window.removeEventListener('sky:unlock-scroll', unlockScroll);
       lenis.destroy();
     };
   }, []);

@@ -17,23 +17,23 @@ export function AGB() {
     <>
       <Navigation />
       <SocialSidebar />
-      <div className="min-h-screen py-20 px-6" style={{ backgroundColor: '#0a0a0a' }}>
-        <div className="container mx-auto max-w-4xl">
+      <div className="min-h-screen bg-black px-6 pt-32 pb-16 text-white md:pt-40">
+        <div className="mx-auto max-w-4xl">
           <button
             onClick={handleBackToHome}
-            className="inline-flex items-center gap-2 text-white/60 hover:text-gold transition-colors mb-8 cursor-pointer"
+            className="mb-12 inline-flex cursor-pointer items-center gap-2 text-sm text-white/50 transition-colors hover:text-white"
           >
             <ArrowLeft size={20} />
             Zurück zur Startseite
           </button>
 
-          <h1 className="text-5xl md:text-7xl tracking-wider mb-12" style={{ color: 'var(--gold)' }}>
+          <h1 className="mb-8 text-5xl font-semibold tracking-[-0.055em] text-white sm:text-7xl md:text-8xl">
             AGB
           </h1>
 
-          <div className="prose prose-invert max-w-none space-y-8 text-white/80">
+          <div className="legal-content max-w-3xl space-y-10 border-t border-white/20 pt-12 text-base leading-relaxed text-white/65">
             <section>
-              <h2 className="text-3xl text-white mb-4">Allgemeine Geschäftsbedingungen</h2>
+              <h2 className="mb-4 text-2xl font-medium tracking-tight text-white md:text-3xl">Allgemeine Geschäftsbedingungen</h2>
               <p>
                 Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge über Video- und
                 Filmproduktionen zwischen SKYGREY Studios und dem Auftraggeber.
@@ -41,7 +41,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">1. Geltungsbereich</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">1. Geltungsbereich</h3>
               <p>
                 Diese AGB gelten für alle Geschäftsbeziehungen zwischen SKYGREY Studios und unseren Kunden.
                 Abweichende Bedingungen des Kunden werden nur dann Vertragsbestandteil, wenn wir dem
@@ -50,7 +50,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">2. Vertragsabschluss</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">2. Vertragsabschluss</h3>
               <p>
                 Der Vertrag kommt durch Annahme des Angebots durch den Kunden zustande. Dies kann schriftlich,
                 per E-Mail oder durch Auftragserteilung erfolgen. Änderungen und Ergänzungen bedürfen der
@@ -59,7 +59,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">3. Leistungsumfang</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">3. Leistungsumfang</h3>
               <p>
                 Der Umfang der zu erbringenden Leistungen ergibt sich aus dem jeweiligen Angebot bzw. der
                 Auftragsbestätigung. Zusätzliche Leistungen werden gesondert berechnet.
@@ -76,7 +76,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">4. Preise und Zahlungsbedingungen</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">4. Preise und Zahlungsbedingungen</h3>
               <p>
                 Alle Preise verstehen sich in Euro zzgl. der gesetzlichen Mehrwertsteuer. Es gelten die zum
                 Zeitpunkt der Auftragserteilung gültigen Preise.
@@ -92,7 +92,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">5. Mitwirkungspflichten des Kunden</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">5. Mitwirkungspflichten des Kunden</h3>
               <p>
                 Der Kunde verpflichtet sich, alle für die Durchführung des Auftrags notwendigen Informationen
                 und Materialien rechtzeitig zur Verfügung zu stellen. Verzögerungen durch fehlende oder
@@ -101,7 +101,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">6. Korrekturschleifen</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">6. Korrekturschleifen</h3>
               <p>
                 Im vereinbarten Preis sind bis zu zwei Korrekturschleifen enthalten. Weitere Änderungswünsche
                 werden nach Aufwand berechnet.
@@ -109,7 +109,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">7. Urheberrecht und Nutzungsrechte</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">7. Urheberrecht und Nutzungsrechte</h3>
               <p>
                 Alle Rechte an den erstellten Werken verbleiben bei SKYGREY Studios. Der Kunde erhält ein
                 einfaches, zeitlich und räumlich unbegrenztes Nutzungsrecht für den vereinbarten Zweck.
@@ -118,7 +118,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">8. Haftung</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">8. Haftung</h3>
               <p>
                 SKYGREY Studios haftet für Vorsatz und grobe Fahrlässigkeit. Die Haftung für leichte
                 Fahrlässigkeit ist ausgeschlossen, es sei denn, es wurden wesentliche Vertragspflichten
@@ -127,7 +127,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">9. Stornierung</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">9. Stornierung</h3>
               <p>
                 Bei Stornierung durch den Kunden gelten folgende Regelungen:
               </p>
@@ -139,7 +139,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">10. Datenschutz</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">10. Datenschutz</h3>
               <p>
                 Die Verarbeitung personenbezogener Daten erfolgt gemäß unserer Datenschutzerklärung und den
                 gesetzlichen Bestimmungen der DSGVO.
@@ -147,7 +147,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">11. Schlussbestimmungen</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">11. Schlussbestimmungen</h3>
               <p>
                 Es gilt das Recht der Bundesrepublik Deutschland. Erfüllungsort und Gerichtsstand ist Bonn,
                 soweit der Kunde Kaufmann, juristische Person des öffentlichen Rechts oder
@@ -156,7 +156,7 @@ export function AGB() {
             </section>
 
             <section>
-              <h3 className="text-2xl text-white mb-3">12. Salvatorische Klausel</h3>
+              <h3 className="mb-3 text-xl font-medium tracking-tight text-white md:text-2xl">12. Salvatorische Klausel</h3>
               <p>
                 Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, berührt dies die
                 Wirksamkeit der übrigen Bestimmungen nicht.
@@ -170,13 +170,13 @@ export function AGB() {
         </div>
 
         {/* Footer */}
-        <div className="container mx-auto max-w-4xl mt-20 pt-10 border-t border-white/10">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-white/50 text-sm">
+        <div className="mx-auto mt-24 max-w-4xl border-t border-white/20 pt-8">
+          <div className="flex flex-col items-center justify-between gap-5 text-sm text-white/45 md:flex-row">
             <p>© 2026 SKYGREY Studios. Alle Rechte vorbehalten.</p>
-            <div className="flex gap-6 items-center">
-              <Link to="/datenschutz" className="hover:text-gold transition-colors">Datenschutz</Link>
-              <Link to="/impressum" className="hover:text-gold transition-colors">Impressum</Link>
-              <Link to="/agb" className="hover:text-gold transition-colors">AGB</Link>
+            <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+              <Link to="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
+              <Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link>
+              <Link to="/agb" className="hover:text-white transition-colors">AGB</Link>
             </div>
           </div>
           
@@ -185,10 +185,10 @@ export function AGB() {
               href="https://www.maxmedia.de"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-white/40 hover:text-gold transition-colors text-sm group"
+              className="inline-flex items-center gap-2 text-white/40 hover:text-white transition-colors text-sm group"
             >
               <span>Webdesign by:</span>
-              <span className="font-semibold text-white/60 group-hover:text-gold transition-colors">
+              <span className="font-semibold text-white/60 group-hover:text-white transition-colors">
                 MAXMEDIA
               </span>
             </a>
