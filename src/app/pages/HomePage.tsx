@@ -4,7 +4,6 @@ import { Navigation } from '../components/Navigation';
 import { Hero } from '../components/Hero';
 import { LogoMarquee } from '../components/LogoMarquee';
 import { FilmProjects } from '../components/FilmProjects';
-import { Services } from '../components/Services';
 import { About } from '../components/About';
 import { Team } from '../components/Team';
 import { Testimonials } from '../components/Testimonials';
@@ -54,7 +53,6 @@ export function HomePage() {
       <Hero />
       <LogoMarquee />
       <FilmProjects />
-      <Services />
       <About />
       <Team />
       <Testimonials />

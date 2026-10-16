@@ -27,3 +27,13 @@ button, a, [role="button"] { cursor: pointer; }
 /* V22: keyboard accessibility, mobile menu, and reduced-motion polish */
 :where(button, a, input, textarea):focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto !important; } *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+
+/* Mobile refinement: safe viewport, clean type and edge-to-edge media */
+html,body,#root { max-width:100%; }
+body { overflow-x:clip; }
+@media (max-width:640px) {
+  .sky-hero { min-height:520px; height:100svh; }
+  .sky-hero .sky-display { letter-spacing:-.065em; }
+  .sky-hero-video { width:177.78vh; height:100vh; min-width:100%; min-height:100%; }
+  .sky-menu { height:100dvh; }
+}
