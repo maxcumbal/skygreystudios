@@ -43,6 +43,28 @@ function DragSlider({ videos, format = "portrait" }: { videos: Video[]; format?:
   const settleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const settling = useRef(false);
   const [position, setPosition] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
+  const hintTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // One subtle, text-free swipe cue per browsing session, on the first gallery reached.
+  useEffect(() => {
+    const node = track.current;
+    if (!node || typeof window === 'undefined' || !window.matchMedia('(max-width: 639px)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      observer.disconnect();
+      try {
+        if (window.sessionStorage.getItem('skygrey-swipe-hint-shown')) return;
+        window.sessionStorage.setItem('skygrey-swipe-hint-shown', '1');
+      } catch { /* Hint still works if browser storage is unavailable. */ }
+      hintTimer.current = setTimeout(() => {
+        setShowSwipeHint(true);
+        hintTimer.current = setTimeout(() => setShowSwipeHint(false), 1300);
+      }, 550);
+    }, { threshold: 0.45 });
+    observer.observe(node);
+    return () => { observer.disconnect(); if (hintTimer.current) clearTimeout(hintTimer.current); };
+  }, []);
   // Three identical sets make the gallery circular, including categories with one film.
   const items = [...videos, ...videos, ...videos];
   const measure = () => {
@@ -68,7 +90,19 @@ function DragSlider({ videos, format = "portrait" }: { videos: Video[]; format?:
   const updatePosition = () => {
     if (frame.current !== null) cancelAnimationFrame(frame.current);
     frame.current = requestAnimationFrame(() => {
-      if (track.current) setPosition(track.current.scrollLeft + track.current.clientWidth / 2);
+      if (track.current) {
+        const node = track.current;
+        const center = node.scrollLeft + node.clientWidth / 2;
+        setPosition(center);
+        let nearest = 0;
+        let smallestDistance = Infinity;
+        Array.from(node.children).forEach((child, i) => {
+          const item = child as HTMLElement;
+          const distance = Math.abs(item.offsetLeft + item.offsetWidth / 2 - center);
+          if (distance < smallestDistance) { smallestDistance = distance; nearest = i; }
+        });
+        setActiveIndex(nearest % videos.length);
+      }
     });
   };
   const wrapScroll = () => {
@@ -126,10 +160,10 @@ function DragSlider({ videos, format = "portrait" }: { videos: Video[]; format?:
     if (settleTimer.current) clearTimeout(settleTimer.current);
     settling.current = false;
   };
-  return <div className="relative mx-auto w-full max-w-none overflow-hidden">
+  return <div className={`relative mx-auto w-full max-w-none overflow-hidden ${showSwipeHint ? "skygrey-swipe-hint" : ""}`}>
     <div ref={track} onMouseDown={onDown} onMouseMove={onMove} onMouseUp={stop} onMouseLeave={stop} onTouchStart={onTouchStart} onTouchEnd={scheduleSnap} onScroll={() => { wrapScroll(); scheduleSnap(); }}
       style={{ perspective: '1100px', perspectiveOrigin: '50% 45%', overscrollBehaviorX: 'contain' }}
-      className="flex cursor-grab select-none items-center gap-[clamp(100px,15vw,300px)] overflow-x-auto px-[calc(50%-31vw)] pb-6 active:cursor-grabbing sm:px-[calc(50%-17vw)] lg:px-[calc(50%-160px)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      className="flex cursor-grab select-none items-center gap-5 sm:gap-[clamp(100px,15vw,300px)] overflow-x-auto px-[calc(50%-34vw)] pb-6 active:cursor-grabbing sm:px-[calc(50%-17vw)] lg:px-[calc(50%-160px)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       aria-label="Magnetisches Endlos-Videokarussell – ziehen oder wischen, Videos rasten mittig ein">
       {items.map((video, i) => {
         const node = track.current?.children[i] as HTMLElement | undefined;
@@ -140,10 +174,21 @@ function DragSlider({ videos, format = "portrait" }: { videos: Video[]; format?:
         const isCenter = Math.abs(delta) < 0.5;
         const inView = Math.abs(delta) < 1.5;
         return <div key={`${video.id}-${i}`} aria-hidden={i < videos.length || i >= videos.length * 2}
-          className={format === "portrait" ? "w-[62vw] max-w-[320px] shrink-0 sm:w-[34vw] lg:w-[320px]" : "w-[84vw] max-w-[880px] shrink-0 sm:w-[65vw] lg:w-[52vw]"}
+          className={format === "portrait" ? "w-[68vw] max-w-[320px] shrink-0 sm:w-[34vw] lg:w-[320px]" : "w-[84vw] max-w-[880px] shrink-0 sm:w-[65vw] lg:w-[52vw]"}
           style={{ opacity: inView ? 1 : 0, pointerEvents: inView ? "auto" : "none", transform: `rotateY(${angle}deg) translateZ(${-depth * 30}px)`, transformStyle: 'preserve-3d', transition: drag.current.active ? 'none' : 'transform 220ms ease-out', willChange: 'transform' }}><VideoCard video={video} format={format} shouldLoad={isCenter && inView} /></div>;
       })}
     </div>
+    {format === "landscape" && videos.length > 1 && (
+      <div className="mt-2 flex items-center justify-center gap-2.5 sm:hidden" aria-label={`Video ${activeIndex + 1} von ${videos.length}`}>
+        {videos.map((video, index) => (
+          <span
+            key={video.id}
+            aria-hidden="true"
+            className={`block h-1.5 rounded-full transition-all duration-300 ${index === activeIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/35'}`}
+          />
+        ))}
+      </div>
+    )}
   </div>;
 }
 

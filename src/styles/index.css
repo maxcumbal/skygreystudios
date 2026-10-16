@@ -2,3 +2,13 @@
 @import './tailwind.css';
 @import './theme.css';
 @import './sky-redesign.css';
+
+/* A single subtle, text-free gesture hint on small screens. */
+@keyframes skygrey-mobile-swipe-hint {
+  0%, 12%, 100% { transform: translateX(0); }
+  42% { transform: translateX(-22px); }
+  73% { transform: translateX(9px); }
+}
+@media (max-width: 639px) and (prefers-reduced-motion: no-preference) {
+  .skygrey-swipe-hint > div { animation: skygrey-mobile-swipe-hint 1.25s ease-in-out both; }
+}
