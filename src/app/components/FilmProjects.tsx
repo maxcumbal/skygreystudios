@@ -224,17 +224,36 @@ function VideoCard({ video, format, shouldLoad }: { video: Video; format: "portr
       player.pause();
     }
   }, [enabled]);
-  return <article className="min-w-0">
-    <div ref={container} className={`relative overflow-hidden bg-[#111] ${format === "portrait" ? "aspect-[9/16]" : "aspect-video"}`}>
-      <img src={poster} alt="" loading="lazy" draggable={false} className="pointer-events-none absolute inset-0 h-full w-full object-cover" />
+  return <article className="block w-full min-w-0 max-w-full overflow-hidden">
+    <div ref={container} className={`relative block w-full max-w-full overflow-hidden border-0 bg-black ${format === "portrait" ? "aspect-[9/16]" : "aspect-video"}`}>
+      <img src={poster} alt="" loading="lazy" draggable={false} className={`pointer-events-none absolute inset-0 block h-full w-full ${format === "landscape" ? "object-cover scale-[1.005]" : "object-cover"}`} />
       {enabled && !failed && <video
         ref={element} src={`${videoBase}/play_720p.mp4`} poster={poster}
         autoPlay muted loop playsInline preload="auto" controls={false} disablePictureInPicture
         onPlaying={() => setPlayingFrame(true)} onError={() => setFailed(true)}
-        className={`pointer-events-none absolute inset-0 h-full w-full object-cover transition-opacity duration-200 ${playingFrame ? 'opacity-100' : 'opacity-0'}`}
+        className={`pointer-events-none absolute inset-0 block h-full w-full border-0 transition-opacity duration-200 ${format === "landscape" ? "object-cover scale-[1.005]" : "object-cover"} ${playingFrame ? 'opacity-100' : 'opacity-0'}`}
         aria-label={video.title} />}
     </div>
   </article>;
+}
+
+
+/** Full-width 16:9 films in a vertical gallery; only a visible film plays. */
+function LandscapeFilm({ video }: { video: Video }) {
+  const container = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const node = container.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setVisible(entry.intersectionRatio >= 0.45);
+    }, { threshold: [0, 0.25, 0.45, 0.6, 1] });
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+  return <div ref={container} className="relative block w-full min-w-0 max-w-full overflow-hidden">
+    <VideoCard video={video} format="landscape" shouldLoad={visible} />
+  </div>;
 }
 
 export function FilmProjects() {
@@ -254,9 +273,11 @@ export function FilmProjects() {
         </motion.div>)}
 
       </div>
-      <div id="weitere-projekte" className="mt-20 scroll-mt-28 border-t border-white/20 pt-10 sm:mt-36">
+      <div id="weitere-projekte" className="mt-20 w-full min-w-0 max-w-full scroll-mt-28 overflow-hidden border-t border-white/20 pt-10 sm:mt-36">
         <h3 className="mb-8 text-[clamp(2rem,6vw,6rem)] font-black uppercase leading-[.95] tracking-[-.06em]">WEITERE PROJEKTE<span className="text-white/30">.</span></h3>
-        <DragSlider videos={landscapeVideos} format="landscape" />
+        <div className="flex w-full min-w-0 flex-col gap-8 sm:gap-16 lg:gap-24">
+          {landscapeVideos.map((video) => <LandscapeFilm key={video.id} video={video} />)}
+        </div>
       </div>
     </div>
   </section>;
