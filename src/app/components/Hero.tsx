@@ -60,23 +60,32 @@ export function Hero() {
         />}
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/45" />
       </div>
-      <div ref={contentRef} className="relative z-10 h-full flex flex-col justify-end px-5 sm:px-10 lg:px-16 pb-16 sm:pb-12 lg:pb-16">
-        <h1 className="sky-hero-reveal sky-display max-w-[1450px] uppercase font-black tracking-[-.075em] leading-[.82] text-[clamp(2.55rem,11.7vw,13.8rem)]">
+      <div ref={contentRef} className="relative z-10 h-full flex flex-col justify-end px-5 sm:px-10 lg:px-16 pt-16 sm:pt-0 pb-[max(3.5rem,9svh)] sm:pb-12 lg:pb-16">
+        <h1 className="sky-hero-reveal sky-display max-w-[1450px] uppercase font-black tracking-[-.075em] leading-[.82] text-[clamp(3.65rem,14.5vw,6rem)] sm:text-[clamp(2.55rem,11.7vw,13.8rem)]">
           <span className="block">WE MAKE</span>
-          <span className="flex items-center gap-2.5 sm:gap-7 lg:gap-10">
+          <span className="flex items-center gap-2 sm:gap-7 lg:gap-10">
             <span className="sky-outline whitespace-nowrap">IT MATTER.</span>
             <button
               type="button"
               onClick={() => setShowReel(true)}
               aria-label="Showreel abspielen"
               title="Showreel abspielen"
-              className="group flex shrink-0 items-center justify-center w-[clamp(2.5rem,7vw,7.5rem)] h-[clamp(2.5rem,7vw,7.5rem)] rounded-full border border-white/65 bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-black hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              className="group hidden sm:flex shrink-0 items-center justify-center w-[clamp(2.25rem,9vw,3.2rem)] h-[clamp(2.25rem,9vw,3.2rem)] sm:w-[clamp(2.5rem,7vw,7.5rem)] sm:h-[clamp(2.5rem,7vw,7.5rem)] rounded-full border border-white/65 bg-white/10 backdrop-blur-sm transition-all duration-300 hover:bg-white hover:text-black hover:scale-105 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
             >
               <Play className="ml-[5%] w-[30%] h-[30%]" fill="currentColor" strokeWidth={1.4} />
             </button>
           </span>
         </h1>
       </div>
+      <button
+        type="button"
+        onClick={() => setShowReel(true)}
+        aria-label="Showreel abspielen"
+        title="Showreel abspielen"
+        className="absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center h-[76px] w-[76px] rounded-full border border-white/75 bg-black/20 text-white backdrop-blur-[3px] transition-colors hover:bg-white hover:text-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:hidden"
+      >
+        <Play className="ml-[4px] h-7 w-7" fill="currentColor" strokeWidth={1.4} />
+      </button>
       <span className="absolute z-10 hidden sm:block top-28 right-6 lg:right-16 text-[10px] tracking-[.2em] uppercase text-white/60 [writing-mode:vertical-rl]">STORIES IN MOTION — 2026</span>
     </section>
     {showReel && <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-3 sm:p-12" role="dialog" aria-modal="true" aria-label="Showreel">

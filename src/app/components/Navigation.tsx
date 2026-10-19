@@ -3,7 +3,7 @@ import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router';
 
 const links = [
-  { id: 'immobilienvideos', label: 'Immobilienvideos' },
+  { id: 'immobilienvideos', label: 'Immobilienfilme' },
   { id: 'weitere-projekte', label: 'Projekte' },
   { id: 'contact', label: 'Kontakt' },
 ];
@@ -44,10 +44,10 @@ export function Navigation() {
       </nav>
     </header>
     <div id="sky-full-menu" aria-hidden={!open} className={`sky-menu fixed inset-0 z-[55] bg-[#111] text-white transition-all duration-500 ${open ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
-      <div className="h-full flex flex-col justify-center overflow-y-auto px-5 sm:px-16 lg:px-24 pt-24 pb-10">
-        <span className="text-xs uppercase tracking-[.3em] text-white/50 mb-8">Explore SKYGREY</span>
-        {links.map((item, i) => <button key={item.id} tabIndex={open ? 0 : -1} onClick={() => go(item.id)} className="group w-full break-words text-left uppercase font-black tracking-[-.06em] leading-[1.1] text-[clamp(1.85rem,7vw,7rem)] hover:text-white/45 transition-colors"><span className="inline-block align-top text-xs tracking-normal font-medium text-white/50 mr-3 sm:mr-5 mt-2 sm:mt-4">0{i+1}</span>{item.label}<ArrowUpRight className="inline-block ml-4 opacity-0 group-hover:opacity-100 transition-opacity" size={30}/></button>)}
-        <p className="mt-12 text-white/40 text-sm">Independent film & creative studio</p>
+      <div className="h-full flex flex-col justify-center overflow-y-auto px-6 sm:px-16 lg:px-24 pt-24 pb-10">
+        <span className="text-[10px] sm:text-xs uppercase tracking-[.3em] text-white/50 mb-7 sm:mb-8">Explore SKYGREY</span>
+        {links.map((item, i) => <button key={item.id} tabIndex={open ? 0 : -1} onClick={() => go(item.id)} className="group w-full break-words text-left uppercase font-black tracking-[-.055em] leading-[1.12] py-3 sm:py-0 text-[clamp(2.5rem,10.4vw,4.3rem)] sm:text-[clamp(1.85rem,7vw,7rem)] hover:text-white/45 transition-colors"><span className="inline-block align-top text-[11px] sm:text-xs tracking-normal font-medium text-white/50 mr-3 sm:mr-5 align-middle">0{i+1}</span>{item.label}<ArrowUpRight className="hidden sm:inline-block ml-4 opacity-0 group-hover:opacity-100 transition-opacity" size={30}/></button>)}
+        <p className="mt-10 sm:mt-12 text-white/40 text-xs sm:text-sm">Independent film & creative studio</p>
       </div>
     </div>
   </>;
